@@ -1,0 +1,60 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+        - develop
+        - /pksp-.*/
+
+    docker:
+      - image: circleci/node:9
+        environment:
+        - NODE_ENV: test
+        - PKS_LOG_LEVEL: 4
+        - PKS_HOST: 127.0.0.1
+        - PKS_PORT: 3100
+        - PKS_AUTH_SECRET: test0123test0123test0123test0123
+        - PKS_DB_CONNECTION_STRING: postgresql://pks_user:pks_password@127.0.0.1:5432/pks_db?sslmode=disable
+
+      - image: circleci/postgres:10
+        environment:
+        - POSTGRES_USER: pks_user
+        - POSTGRES_PASSWORD: pks_password
+        - POSTGRES_DB: pks_db
+
+    working_directory: ~/pks-core
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - pks-core-dependencies-{{ checksum "yarn.lock" }}
+          - pks-core-dependencies-
+
+      - run:
+          name: Install dependencies
+          command: make install
+
+      - save_cache:
+          paths:
+            - node_modules
+            - flow-typed/npm
+          key: pks-core-dependencies-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Run lint
+          command: make lint
+
+      - run:
+          name: Run typecheck
+          command: make typecheck
+
+      - run:
+          name: Run tests
+          command: make test-ci

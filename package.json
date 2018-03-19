@@ -1,0 +1,62 @@
+{
+  "name": "core",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "dotenv": "^5.0.0",
+    "jsonwebtoken": "^8.1.1",
+    "knex": "^0.14.4",
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^4.0.0",
+    "koa-jwt": "^3.3.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.5",
+    "pg": "^7.4.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint-plugin-flowtype": "^2.46.1",
+    "flow-bin": "^0.68.0",
+    "flow-typed": "^2.4.0",
+    "husky": "^0.15.0-rc.8",
+    "jest": "^22.4.2",
+    "lint-staged": "^7.0.0",
+    "standard": "^11.0.0",
+    "supertest": "^3.0.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "flowtype"
+    ],
+    "globals": [
+      "it",
+      "describe",
+      "expect",
+      "jest",
+      "beforeEach",
+      "afterEach"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "standard --fix",
+      "git add"
+    ],
+    "src/**/*.test.js": [
+      "standard --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "make lint && make typecheck && make test-ci"
+    }
+  }
+}
