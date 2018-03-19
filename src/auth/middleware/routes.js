@@ -7,7 +7,7 @@ const router = new Router({ prefix: '/auth' })
 
 router
   .post('/signin/start', parseJsonBody, handleSignInSessionStart)
-  .get('/signin/complete', parseJsonBody, handleSignInSessionComplete)
+  .post('/signin/complete', parseJsonBody, handleSignInSessionComplete)
 
 const routes = router.routes()
 

@@ -1,5 +1,7 @@
-const createAuthToken = require('./createAuthToken')
+const generateChallenge = require('./generateChallenge')
+const createToken = require('./createToken')
 
 module.exports = {
-  createAuthToken
+  generateChallenge,
+  createToken
 }

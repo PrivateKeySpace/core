@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bitcoinjs-lib": "^3.3.2",
     "bluebird": "^3.5.1",
     "dotenv": "^5.0.0",
     "jsonwebtoken": "^8.1.1",
