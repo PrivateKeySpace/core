@@ -1,4 +1,5 @@
 const request = require('supertest')
+const { CORS_ORIGIN } = require('../common/config')
 const app = require('../')
 
 describe('common e2e', () => {
@@ -8,6 +9,7 @@ describe('common e2e', () => {
         .get('/health')
         .expect(200)
         .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
         .expect('{}')
     })
   })
