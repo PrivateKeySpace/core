@@ -1,0 +1,5 @@
+const CHALLENGE_HIDDEN_LENGTH = 64
+
+module.exports = {
+  CHALLENGE_HIDDEN_LENGTH
+}

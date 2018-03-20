@@ -6,6 +6,7 @@
     "bitcoinjs-lib": "^3.3.2",
     "bluebird": "^3.5.1",
     "dotenv": "^5.0.0",
+    "globby": "^8.0.1",
     "jsonwebtoken": "^8.1.1",
     "knex": "^0.14.4",
     "koa": "^2.5.0",

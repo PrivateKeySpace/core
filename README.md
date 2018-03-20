@@ -27,7 +27,7 @@ Run development server:
 $ make run
 ```
 
-Run tests in interactive mode:
+Run tests:
 ```bash
 $ make test
 ```

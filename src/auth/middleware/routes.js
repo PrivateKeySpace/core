@@ -6,7 +6,7 @@ const handleSignInSessionComplete = require('./handleSignInSessionComplete')
 const router = new Router({ prefix: '/auth' })
 
 router
-  .post('/signin/start', parseJsonBody, handleSignInSessionStart)
+  .post('/signin/start', handleSignInSessionStart)
   .post('/signin/complete', parseJsonBody, handleSignInSessionComplete)
 
 const routes = router.routes()

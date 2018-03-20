@@ -1,5 +1,9 @@
-const authTokenConstants = require('./authToken')
+const challengeConstants = require('./challenge')
+const sessionConstants = require('./session')
+const tokenConstants = require('./token')
 
 module.exports = {
-  ...authTokenConstants
+  ...challengeConstants,
+  ...sessionConstants,
+  ...tokenConstants
 }

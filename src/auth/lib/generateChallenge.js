@@ -1,6 +1,5 @@
 const { randomBytes: generateRandomBytes } = require('crypto')
-
-const CHALLENGE_HIDDEN_LENGTH = 64
+const { CHALLENGE_HIDDEN_LENGTH } = require('../constants')
 
 function generateChallenge () {
   const challengeVisible = (new Date()).toUTCString()

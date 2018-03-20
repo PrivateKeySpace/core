@@ -1,0 +1,5 @@
+const DB_ERROR_UNKNOWN_FAILURE = 20
+
+module.exports = {
+  DB_ERROR_UNKNOWN_FAILURE
+}

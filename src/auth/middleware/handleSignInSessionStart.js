@@ -6,16 +6,16 @@ async function handleSignInSessionStart (ctx) {
   const challenge = generateChallenge()
   const [challengeVisible, challengeHidden] = challenge
 
-  let sessionId
+  let sessionKey
 
   try {
-    sessionId = createSession(challenge)
+    sessionKey = await createSession(challenge)
   } catch (error) {
-    writeResponse(ctx, 500, { error })
+    writeResponse(ctx, 500)
     return
   }
 
-  writeResponse(ctx, 200, { sessionId, challengeVisible, challengeHidden })
+  writeResponse(ctx, 200, { sessionKey, challengeVisible, challengeHidden })
 }
 
 module.exports = handleSignInSessionStart
