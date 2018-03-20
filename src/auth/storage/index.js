@@ -1,5 +1,7 @@
-const createSession = require('./createSession')
+const createSignInSessionForChallenge = require('./createSignInSessionForChallenge')
+const getChallengeBySignInSessionKey = require('./getChallengeBySignInSessionKey')
 
 module.exports = {
-  createSession
+  createSignInSessionForChallenge,
+  getChallengeBySignInSessionKey
 }
