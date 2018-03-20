@@ -1,17 +1,17 @@
+const { isEmpty } = require('lodash')
 const { DB_ERROR_ROW_DOES_NOT_EXIST } = require('../../common/constants')
 const { writeResponse } = require('../../common/lib')
 const { TOKEN_TTL } = require('../constants')
-const { validateSignInSessionCompletePayload, verifySignInChallengeSignature, createToken } = require('../lib')
-const { getChallengeBySignInSessionKey } = require('../storage')
+const { validateSignInSessionCompletePayload, verifySignInChallengeSignature, createHashId, createToken } = require('../lib')
+const { getChallengeBySignInSessionKey, deleteSignInSessionByKey } = require('../storage')
 
 async function handleSignInSessionComplete (ctx) {
   const requestPayload = ctx.request.body
 
   {
     const validationErrors = validateSignInSessionCompletePayload(requestPayload)
-    const isPayloadValid = Object.keys(validationErrors).length > 0
 
-    if (!isPayloadValid) {
+    if (!isEmpty(validationErrors)) {
       writeResponse(ctx, 400, { errors: validationErrors })
       return
     }
@@ -31,15 +31,16 @@ async function handleSignInSessionComplete (ctx) {
     return
   }
 
-  const { signature, version } = requestPayload
-  const isSignatureValid = verifySignInChallengeSignature(signature, challenge, version)
+  const { signature, publicKey, implementation } = requestPayload
+  const isSignatureValid = verifySignInChallengeSignature(signature, publicKey, challenge, implementation)
 
   if (!isSignatureValid) {
     writeResponse(ctx, 401, { errors: { signature: 'invalid' } })
     return
   }
 
-  const tokenPayload = {} // TODO
+  const authHashId = createHashId(publicKey)
+  const tokenPayload = { authHashId }
   let token
 
   try {
@@ -50,6 +51,10 @@ async function handleSignInSessionComplete (ctx) {
   }
 
   writeResponse(ctx, 200, { token })
+
+  try {
+    await deleteSignInSessionByKey(sessionKey)
+  } catch (ignored) {}
 }
 
 module.exports = handleSignInSessionComplete

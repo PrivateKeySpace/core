@@ -1,9 +1,12 @@
-const ALLOWED_VERSIONS = [1, 2]
+const { isObject } = require('lodash')
+const { SIGN_IN_IMPLEMENTATIONS } = require('../constants')
+
+const SIGN_IN_IMPLEMENTATIONS_STRING = `"${SIGN_IN_IMPLEMENTATIONS.join('", "')}"`
 
 function validateSignInSessionCompletePayload (payload) {
   const errors = {}
 
-  if (payload === null || typeof payload !== 'object') {
+  if (!isObject(payload)) {
     errors.payload = 'must be an object'
     return errors
   }
@@ -14,10 +17,13 @@ function validateSignInSessionCompletePayload (payload) {
   if (typeof payload.publicKey !== 'string') {
     errors.publicKey = 'must be a string'
   }
-  if (!Number.isInteger(payload.version)) {
-    errors.version = 'must be an integer'
-  } else if (!ALLOWED_VERSIONS.includes(payload.version)) {
-    errors.version = 'must be 1 or 2'
+  if (typeof payload.signature !== 'string') {
+    errors.signature = 'must be a string'
+  }
+  if (typeof payload.publicKey !== 'string') {
+    errors.implementation = 'must be a string'
+  } else if (!SIGN_IN_IMPLEMENTATIONS.includes(payload.implementation)) {
+    errors.implementation = `must be one of: ${SIGN_IN_IMPLEMENTATIONS_STRING}`
   }
 
   return errors

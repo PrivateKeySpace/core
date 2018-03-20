@@ -1,5 +1,5 @@
 
-function verifySignInChallengeSignature () {
+function verifySignInChallengeSignature (signature, challenge, implementation) {
   // TODO
   return true
 }
