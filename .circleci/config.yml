@@ -16,9 +16,9 @@ jobs:
         environment:
         - NODE_ENV: test
         - PKS_LOG_LEVEL: 4
-        - PKS_HOST: 127.0.0.1
+        - PKS_HOST: "127.0.0.1"
         - PKS_PORT: 3100
-        - PKS_CORS_ORIGIN: *
+        - PKS_CORS_ORIGIN: "*"
         - PKS_AUTH_SECRET: test0123test0123test0123test0123
         - PKS_DB_CONNECTION_STRING: postgresql://pks_user:pks_password@127.0.0.1:5432/pks_db?sslmode=disable
 
