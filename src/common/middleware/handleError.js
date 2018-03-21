@@ -11,7 +11,7 @@ async function handleError (ctx, next) {
       console.log(error)
     }
 
-    log(LOG_LEVEL_ERROR, 'app/common/middleware/handleError: error', { error, stack: error.stack })
+    log(LOG_LEVEL_ERROR, 'common/middleware/handleError: error', { error, stack: error.stack })
 
     writeResponse(ctx, 500)
   }

@@ -7,7 +7,7 @@ async function logRequest (ctx, next) {
       url: ctx.request.href,
       ip: ctx.request.ip
     }
-    log(LOG_LEVEL_DEBUG, 'app/common/middleware/logRequest: request', logEntryPayload)
+    log(LOG_LEVEL_DEBUG, 'common/middleware/logRequest: request', logEntryPayload)
   }
 
   const requestTime = Date.now()
@@ -21,7 +21,7 @@ async function logRequest (ctx, next) {
       status: ctx.response.status,
       time: (responseTime - requestTime)
     }
-    log(LOG_LEVEL_DEBUG, 'app/common/middleware/logRequest: response', logEntryPayload)
+    log(LOG_LEVEL_DEBUG, 'common/middleware/logRequest: response', logEntryPayload)
   }
 }
 

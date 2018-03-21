@@ -8,7 +8,7 @@ function handleError (error, ctx) {
     console.log(error)
   }
 
-  log(LOG_LEVEL_ERROR, 'app/common/lib/handleError: error', { error, stack: error.stack })
+  log(LOG_LEVEL_ERROR, 'common/lib/handleError: error', { error, stack: error.stack })
 
   if (ctx) {
     writeResponse(ctx, 500)
