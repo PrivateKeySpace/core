@@ -3,7 +3,7 @@ const { DB_ERROR_ROW_DOES_NOT_EXIST } = require('../../common/constants')
 const { writeResponse } = require('../../common/lib')
 const { TOKEN_TTL } = require('../constants')
 const { validateSignInSessionCompletePayload, verifySignInChallengeSignature, createHashId, createToken } = require('../lib')
-const { getChallengeBySignInSessionKey, deleteSignInSessionByKey } = require('../storage')
+const { findSignInSessionByKey, deleteSignInSessionByKey } = require('../storage')
 
 async function handleSignInSessionComplete (ctx) {
   const requestPayload = ctx.request.body
@@ -18,10 +18,10 @@ async function handleSignInSessionComplete (ctx) {
   }
 
   const { sessionKey } = requestPayload
-  let challenge
+  let session
 
   try {
-    challenge = await getChallengeBySignInSessionKey(sessionKey)
+    session = await findSignInSessionByKey(sessionKey)
   } catch (error) {
     if (error === DB_ERROR_ROW_DOES_NOT_EXIST) {
       writeResponse(ctx, 404, { errors: { session: 'not found' } })
@@ -31,6 +31,7 @@ async function handleSignInSessionComplete (ctx) {
     return
   }
 
+  const { challenge } = session
   const { signature, publicKey, implementation } = requestPayload
   const isSignatureValid = verifySignInChallengeSignature(signature, publicKey, challenge, implementation)
 
