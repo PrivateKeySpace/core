@@ -22,7 +22,12 @@ Install dependencies:
 $ make install
 ```
 
-Run development server:
+Create build:
+```bash
+$ make build
+```
+
+Run development server (depends on build):
 ```bash
 $ make run
 ```
@@ -35,6 +40,21 @@ $ make test
 Run tests in CI mode:
 ```bash
 $ make test-ci
+```
+
+Migrate database up (depends on build, specify environment with `NODE_ENV`):
+```bash
+$ NODE_ENV=development make migratedb-up
+```
+
+Migrate database down (depends on build, specify environment with `NODE_ENV`):
+```bash
+$ NODE_ENV=development make migratedb-up
+```
+
+Refresh database (depends on build, specify environment with `NODE_ENV`):
+```bash
+$ NODE_ENV=development make migratedb-refresh
 ```
 
 Run typecheck:

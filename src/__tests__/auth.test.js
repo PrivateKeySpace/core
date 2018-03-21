@@ -1,6 +1,6 @@
 const request = require('supertest')
 const { CORS_ORIGIN } = require('../common/config')
-const { refreshDb } = require('../common/storage')
+const { migrateDbRefresh } = require('../common/storage')
 const { generateRandomString } = require('../common/lib/crypto')
 const { CHALLENGE_HIDDEN_LENGTH, SESSION_KEY_LENGTH, SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../auth/constants')
 const { createSignInSession } = require('../auth/storage')
@@ -8,7 +8,7 @@ const app = require('../')
 
 describe('auth e2e', () => {
   beforeEach(async () => {
-    await refreshDb()
+    await migrateDbRefresh()
   })
 
   describe('POST /auth/signin/start', () => {

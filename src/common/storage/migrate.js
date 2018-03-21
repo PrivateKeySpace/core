@@ -26,7 +26,7 @@ async function migrateDbDown () {
   await applyMigrations(migrationFilesPaths.reverse())
 }
 
-async function refreshDb () {
+async function migrateDbRefresh () {
   await migrateDbDown()
   await migrateDbUp()
 }
@@ -34,5 +34,5 @@ async function refreshDb () {
 module.exports = {
   migrateDbUp,
   migrateDbDown,
-  refreshDb
+  migrateDbRefresh
 }

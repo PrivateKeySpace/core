@@ -11,8 +11,8 @@ build:
 	babel ./src/ --out-dir ./build/ --ignore ./src/**/*.test.js
 	cp -r ./src/common/storage/migrations ./build/common/storage/migrations
 
-run: build
-	node build
+run:
+	NODE_ENV=development node ./build
 
 test:
 	NODE_ENV=test jest ./src --maxWorkers=1 --forceExit
@@ -28,3 +28,12 @@ lint:
 
 lint-enforce:
 	standard "./src/**/*.js" "./src/**/*.test.js" --fix
+
+migratedb-up:
+	node ./build/common/storage/cli.js migratedb:up
+
+migratedb-down:
+	node ./build/common/storage/cli.js migratedb:down
+
+migratedb-refresh:
+	node ./build/common/storage/cli.js migratedb:refresh
