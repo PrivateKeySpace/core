@@ -11,6 +11,19 @@ describe('auth e2e', () => {
     await migrateDbRefresh()
   })
 
+  describe('OPTIONS /auth/signin/start', () => {
+    it('should succeed and return 200 with proper headers and empty body', async () => {
+      await request(app)
+        .options('/auth/signin/start')
+        .expect(200)
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+        .expect('Allow', 'OPTIONS, POST')
+        .expect('Accept', 'application/json; charset=utf-8')
+        .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
+        .expect('')
+    })
+  })
+
   describe('POST /auth/signin/start', () => {
     it('should succeed and return 200 with signin session id, visible date challenge and hidden random challenge for valid request', async () => {
       await request(app)
@@ -33,6 +46,19 @@ describe('auth e2e', () => {
           expect(responsePayload.challengeVisible).toHaveLength(29) // UTC string length
           expect(responsePayload.challengeHidden).toHaveLength(CHALLENGE_HIDDEN_LENGTH * 2) // hex string length is byte length * 2
         })
+    })
+  })
+
+  describe('OPTIONS /auth/signin/complete', () => {
+    it('should succeed and return 200 with proper headers and empty body', async () => {
+      await request(app)
+        .options('/auth/signin/complete')
+        .expect(200)
+        .expect('Content-Type', 'text/plain; charset=utf-8')
+        .expect('Allow', 'OPTIONS, POST')
+        .expect('Accept', 'application/json; charset=utf-8')
+        .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
+        .expect('')
     })
   })
 
