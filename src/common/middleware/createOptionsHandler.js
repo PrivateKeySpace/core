@@ -7,7 +7,7 @@ function createOptionsHandler (...allowedMethods) {
     ctx.response.status = 200
     ctx.response.type = 'text/plain; charset=utf-8'
     ctx.response.set('Access-Control-Allow-Origin', CORS_ORIGIN)
-    ctx.response.set('Access-Control-Request-Headers', 'Content-Type, X-Authorization')
+    ctx.response.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     ctx.response.set('Allow', `OPTIONS, ${allowedMethodsString}`)
     ctx.response.set('Accept', 'application/json; charset=utf-8')
     ctx.response.body = ''
