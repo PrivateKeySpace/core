@@ -8,7 +8,8 @@ install:
 	flow-typed install
 
 build:
-	babel ./src/ --out-dir ./build/ --ignore ./src/**/*.test.js
+	rm -rf ./build
+	babel ./src/ --out-dir ./build/ --ignore __tests__,__mocks__
 	cp -r ./src/common/storage/migrations ./build/common/storage/migrations
 
 run:
