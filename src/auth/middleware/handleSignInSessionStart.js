@@ -17,9 +17,9 @@ async function handleSignInSessionStart (ctx) {
     return
   }
 
-  const [challengeVisible, challengeHidden] = challenge
+  const [challengeVisual, challengeHidden] = challenge
 
-  writeResponse(ctx, 200, { sessionKey, challengeVisible, challengeHidden })
+  writeResponse(ctx, 200, { sessionKey, challengeVisual, challengeHidden })
 }
 
 module.exports = handleSignInSessionStart

@@ -26,7 +26,7 @@ describe('auth e2e', () => {
   })
 
   describe('POST /auth/signin/start', () => {
-    it('should succeed and return 200 with signin session id, visible date challenge and hidden random challenge for valid request', async () => {
+    it('should succeed and return 200 with signin session id, visual date challenge and hidden random challenge for valid request', async () => {
       await request(app)
         .post('/auth/signin/start')
         .expect(200)
@@ -36,15 +36,15 @@ describe('auth e2e', () => {
           const responsePayload = response.body
 
           expect(responsePayload).toHaveProperty('sessionKey')
-          expect(responsePayload).toHaveProperty('challengeVisible')
+          expect(responsePayload).toHaveProperty('challengeVisual')
           expect(responsePayload).toHaveProperty('challengeHidden')
 
           expect(typeof responsePayload.sessionKey).toBe('string')
-          expect(typeof responsePayload.challengeVisible).toBe('string')
+          expect(typeof responsePayload.challengeVisual).toBe('string')
           expect(typeof responsePayload.challengeHidden).toBe('string')
 
           expect(responsePayload.sessionKey).toHaveLength(SESSION_KEY_LENGTH)
-          expect(responsePayload.challengeVisible).toHaveLength(29) // UTC string length
+          expect(responsePayload.challengeVisual).toHaveLength(29) // UTC string length
           expect(responsePayload.challengeHidden).toHaveLength(CHALLENGE_HIDDEN_LENGTH * 2) // hex string length is byte length * 2
         })
     })
