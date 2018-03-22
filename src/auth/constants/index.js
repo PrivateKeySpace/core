@@ -1,11 +1,11 @@
 const challengeConstants = require('./challenge')
-const sessionConstants = require('./session')
+const signInSessionConstants = require('./signInSession')
 const signInImplementationsConstants = require('./signInImplementations')
 const tokenConstants = require('./token')
 
 module.exports = {
   ...challengeConstants,
-  ...sessionConstants,
+  ...signInSessionConstants,
   ...signInImplementationsConstants,
   ...tokenConstants
 }

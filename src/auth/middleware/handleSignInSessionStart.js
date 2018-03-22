@@ -1,13 +1,13 @@
 const { writeResponse } = require('../../common/lib')
 const { generateRandomString } = require('../../common/lib/crypto')
-const { SESSION_KEY_LENGTH } = require('../constants')
+const { SIGN_IN_SESSION_KEY_LENGTH } = require('../constants')
 const { generateSignInChallenge } = require('../lib')
 const { createSignInSession } = require('../storage')
 
 async function handleSignInSessionStart (ctx) {
   const challenge = generateSignInChallenge()
 
-  const sessionKey = generateRandomString(SESSION_KEY_LENGTH)
+  const sessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
   const sessionData = { key: sessionKey, challenge }
 
   try {

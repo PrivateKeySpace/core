@@ -2,7 +2,7 @@ const request = require('supertest')
 const { CORS_ORIGIN } = require('../common/config')
 const { migrateDbRefresh } = require('../common/storage')
 const { generateRandomString } = require('../common/lib/crypto')
-const { CHALLENGE_HIDDEN_LENGTH, SESSION_KEY_LENGTH, SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../auth/constants')
+const { CHALLENGE_HIDDEN_LENGTH, SIGN_IN_SESSION_KEY_LENGTH, SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../auth/constants')
 const { createSignInSession } = require('../auth/storage')
 const app = require('../')
 
@@ -43,7 +43,7 @@ describe('auth e2e', () => {
           expect(typeof responsePayload.challengeVisual).toBe('string')
           expect(typeof responsePayload.challengeHidden).toBe('string')
 
-          expect(responsePayload.sessionKey).toHaveLength(SESSION_KEY_LENGTH)
+          expect(responsePayload.sessionKey).toHaveLength(SIGN_IN_SESSION_KEY_LENGTH)
           expect(responsePayload.challengeVisual).toHaveLength(29) // UTC string length
           expect(responsePayload.challengeHidden).toHaveLength(CHALLENGE_HIDDEN_LENGTH * 2) // hex string length is byte length * 2
         })
@@ -72,7 +72,7 @@ describe('auth e2e', () => {
       const signature = '20f2d1a42d08c3a362be49275c3ffeeaa415fc040971985548b9f910812237bb41770bf2c8d488428799fbb7e52c11f1a3404011375e4080e077e0e42ab7a5ba02'
       const implementation = SIGN_IN_IMPLEMENTATION_TREZOR_V2
 
-      const sessionKey = generateRandomString(SESSION_KEY_LENGTH)
+      const sessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
       const challenge = [challengeVisual, challengeHidden]
       const sessionData = { key: sessionKey, challenge }
 
