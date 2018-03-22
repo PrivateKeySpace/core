@@ -2,9 +2,9 @@ const { DB_ERROR_UNKNOWN_FAILURE } = require('../../common/constants')
 const { LOG_LEVEL_DEBUG, LOG_LEVEL_ERROR, log } = require('../../common/logging')
 const { db } = require('../../common/storage')
 
-async function deleteExpiredSignInSessions (sessionTtl) {
+async function deleteExpiredSignInSessions (ttl) {
   const currentTime = Math.floor(Date.now() / 1000)
-  const createdTimeMin = (currentTime - sessionTtl)
+  const createdTimeMin = (currentTime - ttl)
 
   const query = db('signInSessions')
     .delete()

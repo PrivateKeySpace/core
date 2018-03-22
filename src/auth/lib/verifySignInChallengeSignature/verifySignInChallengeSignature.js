@@ -1,4 +1,5 @@
 const { ECPair, ECSignature } = require('bitcoinjs-lib')
+const { ThisShouldNeverHappenError } = require('../../../common/lib')
 const { SIGN_IN_IMPLEMENTATION_TREZOR_V1, SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../../constants/index')
 const { createHashTrezorV1, createHashTrezorV2 } = require('./lib')
 
@@ -21,8 +22,7 @@ function verifySignInChallengeSignature (signatureHex, publicKeyHex, challenge, 
       break
     }
     default: {
-      // this should never happen
-      break
+      throw new ThisShouldNeverHappenError('unsupported sign in implementation')
     }
   }
 
