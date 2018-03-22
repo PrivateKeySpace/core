@@ -1,16 +1,20 @@
+/* @flow */
+
+type CreateHashFunction = (Buffer, Buffer) => Buffer
+
 const { ECPair, ECSignature } = require('bitcoinjs-lib')
 const { ThisShouldNeverHappenError } = require('../../../common/lib')
 const { SIGN_IN_IMPLEMENTATION_TREZOR_V1, SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../../constants/index')
 const { createHashTrezorV1, createHashTrezorV2 } = require('./lib')
 
-function verifySignInChallengeSignature (signatureHex, publicKeyHex, challenge, implementation) {
-  const [challengeVisualString, challengeHiddenHex] = challenge
-  const challengeVisualBuffer = Buffer.from(challengeVisualString, 'utf8')
-  const challengeHiddenBuffer = Buffer.from(challengeHiddenHex, 'hex')
-  const signatureBuffer = Buffer.from(signatureHex, 'hex')
-  const publicKeyBuffer = Buffer.from(publicKeyHex, 'hex')
+function verifySignInChallengeSignature (signatureHex: string, publicKeyHex: string, challenge: [string, string], implementation: string): boolean {
+  const [challengeVisualString, challengeHiddenHex]: [string, string] = challenge
+  const challengeVisualBuffer: Buffer = Buffer.from(challengeVisualString, 'utf8')
+  const challengeHiddenBuffer: Buffer = Buffer.from(challengeHiddenHex, 'hex')
+  const signatureBuffer: Buffer = Buffer.from(signatureHex, 'hex')
+  const publicKeyBuffer: Buffer = Buffer.from(publicKeyHex, 'hex')
 
-  let createHash
+  let createHash: CreateHashFunction
 
   switch (implementation) {
     case SIGN_IN_IMPLEMENTATION_TREZOR_V1: {
@@ -26,9 +30,9 @@ function verifySignInChallengeSignature (signatureHex, publicKeyHex, challenge, 
     }
   }
 
-  const hashBuffer = createHash(challengeVisualBuffer, challengeHiddenBuffer)
-  const keyPair = ECPair.fromPublicKeyBuffer(publicKeyBuffer)
-  const { signature } = ECSignature.parseCompact(signatureBuffer)
+  const hashBuffer: Buffer = createHash(challengeVisualBuffer, challengeHiddenBuffer)
+  const keyPair: ECPair = ECPair.fromPublicKeyBuffer(publicKeyBuffer)
+  const { signature }: { signature: ECSignature } = ECSignature.parseCompact(signatureBuffer)
 
   return keyPair.verify(hashBuffer, signature)
 }

@@ -1,8 +1,9 @@
 const { isEmpty } = require('lodash')
 const { DB_ERROR_ROW_DOES_NOT_EXIST } = require('../../common/constants')
 const { writeResponse } = require('../../common/lib')
+const { createHashId } = require('../../common/lib/crypto')
 const { TOKEN_TTL, SIGN_IN_SESSION_TTL } = require('../constants')
-const { validateSignInSessionCompletePayload, verifySignInChallengeSignature, createHashId, createToken } = require('../lib')
+const { validateSignInSessionCompletePayload, verifySignInChallengeSignature, createToken } = require('../lib')
 const { findSignInSessionByKey, deleteSignInSessionByKey, deleteExpiredSignInSessions } = require('../storage')
 
 async function handleSignInSessionComplete (ctx) {
