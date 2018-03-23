@@ -14,13 +14,16 @@ function validateSignInSessionCompletePayload (payload) {
   if (typeof payload.sessionKey !== 'string') {
     errors.sessionKey = 'must be a string'
   }
+
   if (typeof payload.publicKey !== 'string') {
     errors.publicKey = 'must be a string'
   }
+
   if (typeof payload.signature !== 'string') {
     errors.signature = 'must be a string'
   }
-  if (typeof payload.publicKey !== 'string') {
+
+  if (typeof payload.implementation !== 'string') {
     errors.implementation = 'must be a string'
   } else if (!SIGN_IN_IMPLEMENTATIONS.includes(payload.implementation)) {
     errors.implementation = `must be one of: ${SIGN_IN_IMPLEMENTATIONS_STRING}`

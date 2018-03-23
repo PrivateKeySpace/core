@@ -94,5 +94,60 @@ describe('auth e2e', () => {
           expect(typeof responsePayload.token).toBe('string')
         })
     })
+
+    it('should fail and return 404 for request with invalid signin session id', async () => {
+      const challengeVisual = '2015-03-23 17:39:22'
+      const challengeHidden = 'cd8552569d6e4509266ef137584d1e62c7579b5b8ed69bbafa4b864c6521e7c2'
+      const publicKey = '023a472219ad3327b07c18273717bb3a40b39b743756bf287fbd5fa9d263237f45'
+      const signature = '20f2d1a42d08c3a362be49275c3ffeeaa415fc040971985548b9f910812237bb41770bf2c8d488428799fbb7e52c11f1a3404011375e4080e077e0e42ab7a5ba02'
+      const implementation = SIGN_IN_IMPLEMENTATION_TREZOR_V2
+
+      const sessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
+      const failingSessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
+
+      const challenge = [challengeVisual, challengeHidden]
+      const sessionData = { key: failingSessionKey, challenge }
+
+      await createSignInSession(sessionData)
+
+      const requestPayload = { sessionKey, signature, publicKey, implementation }
+
+      await request(app)
+        .post('/auth/signin/complete')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send(requestPayload)
+        .expect(404)
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
+        .expect(response => {
+          const responsePayload = response.body
+          expect(responsePayload).toHaveProperty('errors', { session: 'not found' })
+        })
+    })
+
+    it('should fail and return 400 for request with empty signin payload', async () => {
+      const challengeVisual = '2015-03-23 17:39:22'
+      const challengeHidden = 'cd8552569d6e4509266ef137584d1e62c7579b5b8ed69bbafa4b864c6521e7c2'
+      const sessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
+
+      const challenge = [challengeVisual, challengeHidden]
+      const sessionData = { key: sessionKey, challenge }
+
+      await createSignInSession(sessionData)
+
+      const requestPayload = { }
+
+      await request(app)
+        .post('/auth/signin/complete')
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send(requestPayload)
+        .expect(400)
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
+        .expect(response => {
+          const responsePayload = response.body
+          expect(responsePayload).toHaveProperty('errors')
+        })
+    })
   })
 })
