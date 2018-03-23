@@ -9,5 +9,5 @@ it('should return an array with visual and hidden challenges', () => {
 
   const [challengeVisual, challengeHidden] = challenge
   expect(Date.parse(challengeVisual)).not.toBeNaN()
-  expect(challengeHidden).toHaveLength(CHALLENGE_HIDDEN_LENGTH * 2)
+  expect(challengeHidden).toHaveLength(CHALLENGE_HIDDEN_LENGTH * 2) // hex string length is byte length * 2
 })

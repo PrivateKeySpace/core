@@ -6,13 +6,13 @@ function verifySignInData (payload) {
   return verifySignInChallengeSignature(signature, publicKey, challenge, implementation)
 }
 
-it('should return true with correctly provided signature, public key, visual and hidden challenges and trezor implementation', () => {
+it('should return true for valid set of signature, public key, visual and hidden challenges, and implementation', () => {
   for (const payload of validSignInData) {
     expect(verifySignInData(payload)).toBe(true)
   }
 })
 
-it('should return false with invalid signature/public key/visual and hidden challenges/trezor implementation', () => {
+it('should return false for invalid set of signature, public key, visual and hidden challenges, and implementation', () => {
   for (const payload of invalidSignInData) {
     expect(verifySignInData(payload)).toBe(false)
   }
