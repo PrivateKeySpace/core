@@ -1,4 +1,4 @@
-const { SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../../../constants/signInImplementations')
+const { SIGN_IN_IMPLEMENTATION_TREZOR_V1, SIGN_IN_IMPLEMENTATION_TREZOR_V2 } = require('../../../constants/signInImplementations')
 
 const validSignInData = [
   {
@@ -27,6 +27,15 @@ const validSignInData = [
       'b9b31c335db4cd36e887cea6d9be73d710859c2918e41167d09bb77a0f88bc3e75569b1c2c2301ee66c7dc6b1efc894dc53035c9ceb8b9c1a117abbea8f3aec1'
     ],
     implementation: SIGN_IN_IMPLEMENTATION_TREZOR_V2
+  },
+  {
+    signature: '20fa9e8db27700b6784cf270292b8b7fddd1d126346066c286b02ccf951d9fa3141a6b0528bfc87605c940c491c1f58ccfd7350775df2fd973dcf096415db3f0d7',
+    publicKey: '02134ba0f19c15d41193184f96e444f5903935de726e0433aeae16e446b07129e4',
+    challenge: [
+      '2015-03-12 17:32:26',
+      'aaa3d9fb398428c72254c83b5ef020663d8bff43324187295865965c1bf51160'
+    ],
+    implementation: SIGN_IN_IMPLEMENTATION_TREZOR_V1
   }
 ]
 
