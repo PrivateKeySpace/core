@@ -18,6 +18,7 @@ const ENV: string = process.env.NODE_ENV || 'development'
 const LOG_LEVEL: ?number = parseInt(process.env.PKS_LOG_LEVEL)
 const HOST: ?string = process.env.PKS_HOST
 const PORT: ?number = parseInt(process.env.PKS_PORT)
+const CORS_ORIGIN: ?string = process.env.PKS_CORS_ORIGIN
 const AUTH_SECRET: ?string = process.env.PKS_AUTH_SECRET
 const DB_CONNECTION_STRING: ?string = process.env.PKS_DB_CONNECTION_STRING
 
@@ -26,6 +27,7 @@ module.exports = {
   LOG_LEVEL,
   HOST,
   PORT,
+  CORS_ORIGIN,
   AUTH_SECRET,
   DB_CONNECTION_STRING
 }

@@ -8,16 +8,18 @@ install:
 	flow-typed install
 
 build:
-	babel ./src/ --out-dir ./build/ --ignore ./src/**/*.test.js
+	rm -rf ./build
+	babel ./src/ --out-dir ./build/ --ignore __tests__,__mocks__
+	cp -r ./src/common/storage/migrations ./build/common/storage/migrations
 
-run: build
-	node build
+run:
+	NODE_ENV=development node ./build
 
 test:
-	NODE_ENV=test jest ./src --maxWorkers=1 --watch
+	NODE_ENV=test jest ./src --maxWorkers=1 --forceExit
 
 test-ci:
-	NODE_ENV=test jest ./src --maxWorkers=1 --ci --coverage
+	NODE_ENV=test jest ./src --maxWorkers=1 --forceExit --ci --coverage
 
 typecheck:
 	flow check ./src/
@@ -27,3 +29,12 @@ lint:
 
 lint-enforce:
 	standard "./src/**/*.js" "./src/**/*.test.js" --fix
+
+migratedb-up:
+	node ./build/common/storage/cli.js migratedb:up
+
+migratedb-down:
+	node ./build/common/storage/cli.js migratedb:down
+
+migratedb-refresh:
+	node ./build/common/storage/cli.js migratedb:refresh

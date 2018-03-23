@@ -10,8 +10,8 @@ function log (level, message, properties) {
     return
   }
 
-  const timestamp = Date.now()
-  const entry = { timestamp, level, message, ...properties }
+  const timeMs = Date.now()
+  const entry = { timeMs, level, message, ...properties }
   const entryString = JSON.stringify(entry)
 
   console.log(entryString)

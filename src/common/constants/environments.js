@@ -1,6 +1,8 @@
-const ENV_DEVELOPMENT = 'development'
-const ENV_TEST = 'test'
-const ENV_PRODUCTION = 'production'
+/* @flow */
+
+const ENV_DEVELOPMENT: string = 'development'
+const ENV_TEST: string = 'test'
+const ENV_PRODUCTION: string = 'production'
 
 module.exports = {
   ENV_DEVELOPMENT,

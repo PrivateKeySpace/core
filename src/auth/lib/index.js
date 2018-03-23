@@ -1,5 +1,11 @@
-const createAuthToken = require('./createAuthToken')
+const generateSignInChallenge = require('./generateSignInChallenge')
+const validateSignInSessionCompletePayload = require('./validateSignInSessionCompletePayload')
+const verifySignInChallengeSignature = require('./verifySignInChallengeSignature/index')
+const createToken = require('./createToken')
 
 module.exports = {
-  createAuthToken
+  generateSignInChallenge,
+  validateSignInSessionCompletePayload,
+  verifySignInChallengeSignature,
+  createToken
 }
