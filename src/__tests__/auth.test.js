@@ -94,14 +94,14 @@ describe('auth e2e', () => {
         })
     })
 
-    it('should fail and return 404 for request with invalid signin session id', async () => {
+    it('should fail and return 404 for request with nonexistent signin session id', async () => {
       const { publicKey, signature, implementation, challenge: [challengeVisual, challengeHidden] } = signInData
 
       const sessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
-      const failingSessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
+      const nonexistentSessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
 
       const challenge = [challengeVisual, challengeHidden]
-      const sessionData = { key: failingSessionKey, challenge }
+      const sessionData = { key: nonexistentSessionKey, challenge }
 
       await createSignInSession(sessionData)
 
@@ -120,7 +120,7 @@ describe('auth e2e', () => {
         })
     })
 
-    it('should fail and return 400 for request with empty signin payload', async () => {
+    it('should fail and return 400 for request with invalid payload', async () => {
       const { challenge: [challengeVisual, challengeHidden] } = signInData
       const sessionKey = generateRandomString(SIGN_IN_SESSION_KEY_LENGTH)
 
