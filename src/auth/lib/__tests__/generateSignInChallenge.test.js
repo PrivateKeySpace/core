@@ -1,3 +1,4 @@
+const { CHALLENGE_HIDDEN_LENGTH } = require('../../constants/challenge')
 const generateSignInChallenge = require('../generateSignInChallenge')
 
 it('should return an array with visual and hidden challenges', () => {
@@ -8,5 +9,5 @@ it('should return an array with visual and hidden challenges', () => {
 
   const [challengeVisual, challengeHidden] = challenge
   expect(Date.parse(challengeVisual)).not.toBeNaN()
-  expect(challengeHidden).toHaveLength(128)
+  expect(challengeHidden).toHaveLength(CHALLENGE_HIDDEN_LENGTH * 2)
 })
