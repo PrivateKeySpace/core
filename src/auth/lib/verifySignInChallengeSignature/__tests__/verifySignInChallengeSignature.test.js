@@ -1,25 +1,24 @@
 const verifySignInChallengeSignature = require('../verifySignInChallengeSignature')
-const { validChallenges, invalidChallenges } = require('../__mocks__/signInChallenges')
+const { validSignInData, invalidSignInData } = require('../__mocks__/signInData')
 
-function callVerifySignInChallengeSignature (payload) {
+function verifySignInPayload (payload) {
+  const { signature, publicKey, challenge, implementation } = payload
   return verifySignInChallengeSignature(
-    payload.signature,
-    payload.publicKey,
-    payload.challenge,
-    payload.implementation
+    signature,
+    publicKey,
+    challenge,
+    implementation
   )
 }
 
-it('should return true with correctly provided signature, public key, visual and hidden challenges and trezor implementation',
-  () => {
-    for (const challenge of validChallenges) {
-      expect(callVerifySignInChallengeSignature(challenge)).toBe(true)
-    }
-  })
+it('should return true with correctly provided signature, public key, visual and hidden challenges and trezor implementation', () => {
+  for (const challenge of validSignInData) {
+    expect(verifySignInPayload(challenge)).toBe(true)
+  }
+})
 
-it('should return false with invalid signature/public key/visual and hidden challenges/trezor implementation',
-  () => {
-    for (const challenge of invalidChallenges) {
-      expect(callVerifySignInChallengeSignature(challenge)).toBe(false)
-    }
-  })
+it('should return false with invalid signature/public key/visual and hidden challenges/trezor implementation', () => {
+  for (const challenge of invalidSignInData) {
+    expect(verifySignInPayload(challenge)).toBe(false)
+  }
+})
