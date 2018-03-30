@@ -8,10 +8,9 @@ const handleGetProfile = require('./handleGetProfile')
 const router = new Router({ prefix: '/profile' })
 
 router
-  .options('', requireAuth, createOptionsHandler('post'))
-  .post('', requireAuth, parseJsonBody, loadProfile, handleCreateProfile)
-  .options('', requireAuth, createOptionsHandler('get'))
-  .get('', requireAuth, loadProfile, handleGetProfile)
+  .options('/', requireAuth, createOptionsHandler('get', 'post'))
+  .post('/', requireAuth, parseJsonBody, loadProfile, handleCreateProfile)
+  .get('/', requireAuth, loadProfile, handleGetProfile)
 
 const routes = router.routes()
 

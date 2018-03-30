@@ -16,10 +16,10 @@ run:
 	NODE_ENV=development node ./build
 
 test:
-	NODE_ENV=test jest ./src --maxWorkers=1 --forceExit
+	NODE_ENV=test jest ./src  --runInBand --forceExit
 
 test-ci:
-	NODE_ENV=test jest ./src --maxWorkers=1 --forceExit --ci --coverage
+	NODE_ENV=test jest ./src  --runInBand --forceExit --ci --coverage
 
 typecheck:
 	flow check ./src/
