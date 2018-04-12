@@ -9,19 +9,16 @@ async function loadProfile (ctx, next) {
   try {
     profile = await findProfileByAuthHashId(authHashId)
   } catch (error) {
-    console.log(error)
-    if (error !== DB_ERROR_ROW_DOES_NOT_EXIST) {
-      writeResponse(ctx, 500)
+    if (error === DB_ERROR_ROW_DOES_NOT_EXIST) {
+      writeResponse(ctx, 404, { errors: { profile: 'not found' } })
       return
     }
+    writeResponse(ctx, 500)
+    return
   }
 
-  if (typeof profile === 'undefined') {
-    ctx.state.profile = null
-  } else {
-    profile.data = JSON.parse(profile.data) // TODO : profile decryption
-    ctx.state.profile = profile
-  }
+  profile.data = JSON.parse(profile.data) // TODO : profile decryption
+  ctx.state.profile = profile
 
   await next()
 }

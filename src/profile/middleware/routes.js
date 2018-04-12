@@ -9,7 +9,7 @@ const router = new Router({ prefix: '/profile' })
 
 router
   .options('/', requireAuth, createOptionsHandler('get', 'post'))
-  .post('/', requireAuth, parseJsonBody, loadProfile, handleCreateProfile)
+  .post('/', requireAuth, parseJsonBody, handleCreateProfile)
   .get('/', requireAuth, loadProfile, handleGetProfile)
 
 const routes = router.routes()

@@ -3,13 +3,14 @@ const { LOG_LEVEL_DEBUG, LOG_LEVEL_ERROR, log } = require('../../common/logging'
 const { db } = require('../../common/storage')
 const unwrapProfile = require('./unwrapProfile')
 
-async function findProfileByAuthHashId (authHashId) {
+async function updateProfileByPivotHashId (pivotHashId, data) {
   const query = db('profiles')
-    .select('*')
-    .where(db.raw('"authHashIds" @> array[?]::varchar[]', authHashId))
+    .where('pivotHashId', pivotHashId)
+    .update(data)
     .limit(1)
+    .returning('*')
 
-  log(LOG_LEVEL_DEBUG, 'profile/storage/findProfileByAuthHashId: query', { query: query.toString() })
+  log(LOG_LEVEL_DEBUG, 'profile/storage/updateProfileByPivotHashId: query', { query: query.toString() })
 
   let profile
 
@@ -21,7 +22,7 @@ async function findProfileByAuthHashId (authHashId) {
         : unwrapProfile(profile)
     )
   } catch (error) {
-    log(LOG_LEVEL_ERROR, 'profile/storage/findProfileByAuthHashId: error', { error, stack: error.stack })
+    log(LOG_LEVEL_ERROR, 'profile/storage/updateProfileByPivotHashId: error', { error, stack: error.stack })
     throw DB_ERROR_UNKNOWN_FAILURE
   }
 
@@ -32,4 +33,4 @@ async function findProfileByAuthHashId (authHashId) {
   return profile
 }
 
-module.exports = findProfileByAuthHashId
+module.exports = updateProfileByPivotHashId
