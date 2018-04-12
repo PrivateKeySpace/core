@@ -50,28 +50,23 @@ describe('profile e2e', () => {
         .expect('Content-Type', 'application/json; charset=utf-8')
     })
 
-    // it('should succeed and return 200 with new token for requests with valid pivot extended public key', async () => {
-    //   const authPublicKey = '023a472219ad3327b07c18273717bb3a40b39b743756bf287fbd5fa9d263237f45'
-    //   const authHashId = createHashId(authPublicKey)
-    //   const token = await createToken({ authHashId }, TOKEN_TTL)
-    //
-    //   const pivotXPublicKey = '' // TODO
-    //   const requestPayload = { pivotXPublicKey }
-    //
-    //   await request(app)
-    //     .post('/profile')
-    //     .set('Authorization', `Bearer ${token}`)
-    //     .set('Content-Type', 'application/json; charset=utf-8')
-    //     .send(requestPayload)
-    //     .expect(200)
-    //     .expect('Content-Type', 'application/json; charset=utf-8')
-    //     .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
-    //     .expect(response => {
-    //       const responsePayload = response.body
-    //
-    //       expect(responsePayload).toHaveProperty('token')
-    //       expect(typeof responsePayload.token).toBe('string')
-    //     })
-    // })
+    it('should succeed and return 201 for requests with valid pivot extended public key for which profile does not exist', async () => {
+      const authPublicKey = '023a472219ad3327b07c18273717bb3a40b39b743756bf287fbd5fa9d263237f45'
+      const authHashId = createHashId(authPublicKey)
+      const token = await createToken({ authHashId }, TOKEN_TTL)
+
+      const pivotXPublicKey = '' // TODO
+      const requestPayload = { pivotXPublicKey }
+
+      await request(app)
+        .post('/profile')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json; charset=utf-8')
+        .send(requestPayload)
+        .expect(201)
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
+        .expect({})
+    })
   })
 })
