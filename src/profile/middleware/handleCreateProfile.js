@@ -1,7 +1,9 @@
 const { isEmpty } = require('lodash')
 const { writeResponse } = require('../../common/lib')
 const { createHashId } = require('../../common/lib/crypto')
-const { validateCreateProfilePayload } = require('../lib')
+const { PROFILE_VERSION_0 } = require('../constants')
+const { validateCreateProfilePayload, serializeProfile } = require('../lib')
+const { createProfile } = require('../storage')
 
 async function handleCreateProfile (ctx) {
   const requestPayload = ctx.request.body
@@ -26,11 +28,27 @@ async function handleCreateProfile (ctx) {
   const { tokenPayload: { authHashId } } = ctx.state
   const { pivotXPublicKey } = requestPayload
   const pivotHashId = createHashId(pivotXPublicKey)
+  const profileData = {
+    pivotHashId,
+    authHashIds: [authHashId],
+    data: {
+      version: PROFILE_VERSION_0,
+      pivotXPublicKey
+    }
+  }
 
-  console.log(authHashId, pivotHashId)
-  // TODO
+  profileData.data = JSON.stringify(profileData.data) // TODO : profile encryption
 
-  writeResponse(ctx, 201)
+  let profile
+
+  try {
+    profile = await createProfile(profileData)
+  } catch (error) {
+    writeResponse(ctx, 500)
+    return
+  }
+
+  writeResponse(ctx, 201, serializeProfile(profile))
 }
 
 module.exports = handleCreateProfile

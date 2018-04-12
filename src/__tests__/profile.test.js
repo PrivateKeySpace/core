@@ -66,7 +66,13 @@ describe('profile e2e', () => {
         .expect(201)
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect('Access-Control-Allow-Origin', CORS_ORIGIN)
-        .expect({})
+        .expect(response => {
+          const responsePayload = response.body
+
+          expect(responsePayload).toHaveProperty('pivotHashId')
+          expect(typeof responsePayload.pivotHashId).toBe('string')
+          expect(responsePayload.pivotHashId).toEqual(createHashId(pivotXPublicKey))
+        })
     })
   })
 })
