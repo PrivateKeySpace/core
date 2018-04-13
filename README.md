@@ -1,4 +1,7 @@
 # Private Key Space Wallet - Core Service
+
+[![CircleCI](https://circleci.com/gh/PrivateKeySpace/core/tree/develop.svg?style=shield)](https://circleci.com/gh/PrivateKeySpace/core/tree/develop)
+
 A multi-signature, HD Bitcoin wallet service.
 
 ## Usage
