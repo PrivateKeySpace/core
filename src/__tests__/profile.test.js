@@ -39,7 +39,7 @@ describe('profile e2e', () => {
 
   describe('POST /profile', () => {
     it('should fail and return 401 for unauthenticated request', async () => {
-      const pivotXPublicKey = '' // TODO
+      const pivotXPublicKey = 'xpub68daEnkwfQTP2weErAdhxUDj2xyuP6Hkgu1Zr9VugfYo8k9A4xdUraXmbnSNnRLveH9coy9KjeqsFaYpcVYuuWYsUuNCp4RDm2zB6a4fQoy'
       const requestPayload = { pivotXPublicKey }
 
       await request(app)
@@ -55,7 +55,7 @@ describe('profile e2e', () => {
       const authHashId = createHashId(authPublicKey)
       const token = await createToken({ authHashId }, TOKEN_TTL)
 
-      const pivotXPublicKey = '' // TODO
+      const pivotXPublicKey = 'xpub68daEnkwfQTP2weErAdhxUDj2xyuP6Hkgu1Zr9VugfYo8k9A4xdUraXmbnSNnRLveH9coy9KjeqsFaYpcVYuuWYsUuNCp4RDm2zB6a4fQoy'
       const requestPayload = { pivotXPublicKey }
 
       await request(app)
